@@ -1,0 +1,12 @@
+ul.employeeList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+ul.employeeList li {
+  list-style-type: none;
+  width: 300px;
+  margin: 10px;
+  border: 1px solid #efefef;
+}
