@@ -1,4 +1,10 @@
 import React, { Component } from 'react'
+import { createContainer } from 'meteor/react-meteor-data'
+import { Bins } from '../../../imports/collections/bins'
+
+import BinEditor from './BinEditor'
+import BinPreview from './BinPreview'
+import BinsShare from './BinsShare'
 
 class Bin extends Component {
   constructor() {
@@ -6,11 +12,25 @@ class Bin extends Component {
   }
 
   render() {
-    console.log(this.props.params.binId)
+    if(!this.props.bin) {
+      return <div>Loading ... </div>
+    }
     return (
-      <div>Single bin view </div>
+      <div>
+        <BinEditor bin={this.props.bin} />
+        <BinPreview bin={this.props.bin} />
+        <BinsShare bin={this.props.bin} />
+      </div>
     )
   }
 }
 
-export default Bin
+export default createContainer((props)=> {
+  const { binId } = props.params
+  Meteor.subscribe('bins')
+
+  return {
+    bin: Bins.findOne(binId)
+  }
+
+}, Bin)
